@@ -20,5 +20,11 @@
 
             return services;
         }
+
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.TryAddScoped<ICustumerRepository, CustumerRepository>();
+            return services;
+        }
     }
 }
