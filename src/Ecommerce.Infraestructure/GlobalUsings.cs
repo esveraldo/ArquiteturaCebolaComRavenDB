@@ -9,4 +9,7 @@ global using Microsoft.Extensions.Options;
 global using Raven.Client.Documents;
 global using Raven.Client.Documents.Session;
 global using Ecommerce.Domain.Services;
+global using Ecommerce.Application.Dtos;
+global using Ecommerce.Application.Mappers;
+global using Ecommerce.Application.Mappers.Interfaces;
 
