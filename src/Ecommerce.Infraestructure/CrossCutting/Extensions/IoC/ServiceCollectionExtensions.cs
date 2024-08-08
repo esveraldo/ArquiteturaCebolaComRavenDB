@@ -26,5 +26,11 @@
             services.TryAddScoped<ICustumerRepository, CustumerRepository>();
             return services;
         }
+
+        public static IServiceCollection AddDomainService(this IServiceCollection services)
+        {
+            services.TryAddScoped<ICustumerService, CustumerService>();
+            return services;
+        }
     }
 }

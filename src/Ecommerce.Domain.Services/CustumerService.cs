@@ -1,26 +1,29 @@
-﻿using Ecommerce.Domain.Core.Interfaces.Sevices;
-using Ecommerce.Domain.Models;
-using System.Net.Mail;
-
-namespace Ecommerce.Domain.Services
+﻿namespace Ecommerce.Domain.Services
 {
     public class CustumerService : ICustumerService
     {
-        private readonly ICustumerService _custumerService;
+        private readonly ICustumerRepository _custumerRepository;
 
-        public CustumerService(ICustumerService custumerService)
+        public CustumerService(ICustumerRepository custumerRepository)
         {
-            _custumerService = custumerService;
+            _custumerRepository = custumerRepository;
         }
 
         public void SaveCustumer(Custumer custumer)
         {
-            throw new NotImplementedException();
+            ValidateEmail(custumer.Email);
+            _custumerRepository.Insert(custumer);
+
         }
 
         private void ValidateEmail(string email)
         {
+            if (!IsEmailValid(email))
+                throw new DuplicateEmailException(email);
 
+            var existingEmailCustumer = _custumerRepository.GetByEmail(email);
+            if(existingEmailCustumer is not null)
+                throw new DuplicateEmailException(email);
         }
 
         private bool IsEmailValid(string email)
@@ -35,7 +38,7 @@ namespace Ecommerce.Domain.Services
                 if (emailAddress.Address != null)
                     return false;
 
-                return CheckDomain(email);
+                return CheckDomainHasMXRecord(emailAddress.Host);
             }
             catch (Exception)
             {
@@ -43,15 +46,21 @@ namespace Ecommerce.Domain.Services
                 throw;
             }
 
-            return true;
         }
 
-        private bool CheckDomain(string email)
+        private bool CheckDomainHasMXRecord(string domain)
         {
-            var domain = email.Split('@')[1];
-            var domainParts = domain.Split('.');
-            if(domainParts.Length < 2)
+            try
+            {
+                var lookup = new LookupClient();
+                var result = lookup.Query(domain, QueryType.MX);
+                return result.Answers.MxRecords().Any();
+            }
+            catch (Exception)
+            {
+
                 return false;
+            }
 
             return true;
         }

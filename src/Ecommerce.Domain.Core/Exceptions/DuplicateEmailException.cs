@@ -1,4 +1,4 @@
-﻿namespace Ecommerce.Infraestructure.CrossCutting.Exceptions
+﻿namespace Ecommerce.Domain.Core.Exceptions
 {
     public class DuplicateEmailException : Exception
     {

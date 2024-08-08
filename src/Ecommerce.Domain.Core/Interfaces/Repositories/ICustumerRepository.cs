@@ -7,5 +7,6 @@
         void Delete(string id);
         IEnumerable<Custumer> Get();
         Custumer Get(string id);
+        Custumer? GetByEmail(string email);
     }
 }

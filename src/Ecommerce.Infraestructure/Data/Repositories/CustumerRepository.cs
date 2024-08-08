@@ -1,4 +1,6 @@
-﻿namespace Ecommerce.Infraestructure.Data.Repositories
+﻿using Ecommerce.Domain.Models;
+
+namespace Ecommerce.Infraestructure.Data.Repositories
 {
     public class CustumerRepository : ICustumerRepository
     {
@@ -32,6 +34,14 @@
             using IDocumentSession documentSession = _documentStore.OpenSession();
             var custumer = documentSession.Load<Custumer>(id); 
             return custumer;
+        }
+
+        public Custumer? GetByEmail(string email)
+        {
+            using IDocumentSession documentSession = _documentStore.OpenSession();
+            var custumerEntity = documentSession.Query<Custumer>().FirstOrDefault(c => c.Email == email);
+
+            return custumerEntity;
         }
 
         public void Insert(Custumer custumer)
