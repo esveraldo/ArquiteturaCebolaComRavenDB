@@ -1,8 +1,4 @@
-﻿using Ecommerce.Application.Dtos;
-using Ecommerce.Application.Mappers.Interfaces;
-using Ecommerce.Domain.Models;
-
-namespace Ecommerce.Application.Mappers
+﻿namespace Ecommerce.Application.Mappers
 {
     public class CustumerMapper : IMapper<Custumer, CustumerDto>, IMapper<CustumerDto, Custumer>
     {

@@ -1,4 +1,7 @@
-﻿namespace Ecommerce.Infraestructure.CrossCutting.Extensions.IoC
+﻿using Ecommerce.Application.Interfaces;
+using Ecommerce.Application.Services;
+
+namespace Ecommerce.Infraestructure.CrossCutting.Extensions.IoC
 {
     public static class ServiceCollectionExtensions
     {
@@ -37,6 +40,12 @@
         {
             services.TryAddScoped<IMapper<Custumer, CustumerDto>, CustumerMapper>();
             services.TryAddScoped<IMapper<CustumerDto, Custumer>, CustumerMapper>();
+            return services;
+        }
+
+        public static IServiceCollection AddAppService(this IServiceCollection services)
+        {
+            services.TryAddScoped<ICustumerAppService, CustumerAppSerivce>();
             return services;
         }
     }
