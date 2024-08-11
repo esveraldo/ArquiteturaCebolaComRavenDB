@@ -12,6 +12,10 @@
         public void SaveCustumer(Custumer custumer)
         {
             ValidateEmail(custumer.Email);
+            custumer.IsActive = true;
+            custumer.CreatedDate = DateTime.Now;
+            custumer.Address.IsActive = true;
+            custumer.Address.CreatedDate = DateTime.Now;
             _custumerRepository.Insert(custumer);
 
         }
